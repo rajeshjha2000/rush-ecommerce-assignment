@@ -25,13 +25,13 @@ export default function Home() {
 
   // Mock image mapping for categories
   const categoryImages = {
-    'Wheat': 'http://localhost:5000/images/atta.png',
-    'Pulses': 'http://localhost:5000/images/dal.png',
-    'Dairy Products': 'http://localhost:5000/images/paneer.png',
-    'Drinks & Juices': 'http://localhost:5000/images/snacks.png',
-    'Atta, Rice & Dal': 'http://localhost:5000/images/atta.png',
-    'Masala': 'http://localhost:5000/images/dal.png',
-    'Snacks': 'http://localhost:5000/images/snacks.png',
+    'Wheat': 'https://rush-ecommerce-assignment.onrender.com/images/atta.png',
+    'Pulses': 'https://rush-ecommerce-assignment.onrender.com/images/dal.png',
+    'Dairy Products': 'https://rush-ecommerce-assignment.onrender.com/images/paneer.png',
+    'Drinks & Juices': 'https://rush-ecommerce-assignment.onrender.com/images/snacks.png',
+    'Atta, Rice & Dal': 'https://rush-ecommerce-assignment.onrender.com/images/atta.png',
+    'Masala': 'https://rush-ecommerce-assignment.onrender.com/images/dal.png',
+    'Snacks': 'https://rush-ecommerce-assignment.onrender.com/images/snacks.png',
   };
 
   const heroBanners = [

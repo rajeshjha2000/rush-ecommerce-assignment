@@ -16,7 +16,7 @@ export default function OrderDetails() {
   const [user, setUser] = useState(null);
 
   const fetchOrder = () => {
-    axios.get(`http://localhost:5000/api/orders`).then(res => {
+     axios.get(`https://rush-ecommerce-assignment.onrender.com/api/products?category=All`).then(res => {
       const found = res.data.find(o => o.id === id);
       if (found) {
         setOrder(found);

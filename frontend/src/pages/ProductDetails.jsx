@@ -16,7 +16,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     // We fetch all products and find to simulate API for a single product easily
-    axios.get(`http://localhost:5000/api/products?category=All`).then(res => {
+    axios.get(`https://rush-ecommerce-assignment.onrender.com/api/orders`).then(res => {
       const found = res.data.find(p => p.id.toString() === id);
       setProduct(found);
     });
