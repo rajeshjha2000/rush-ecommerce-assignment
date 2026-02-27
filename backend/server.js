@@ -1,17 +1,17 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use('/images', express.static('public/images'));
 
 // MongoDB Connection
-const MONGODB_URI = 'mongodb+srv://infojobfound_db_user:hGPxnFQIio4MbKvQ@cluster0.mb8b1cc.mongodb.net/rush_ecommerce?appName=Cluster0';
-mongoose.connect(MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB database.'))
   .catch(err => console.error('MongoDB connection error:', err));
 
@@ -73,7 +73,7 @@ app.get('/api/categories', async (req, res) => {
   try {
     const categories = await Category.find();
     res.json(categories.map(c => c.name));
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get('/api/products', async (req, res) => {
@@ -95,7 +95,7 @@ app.get('/api/products', async (req, res) => {
     // but the frontend is already built for JSON parsing so it will just ignore them
     const products = await Product.find(query);
     res.json(products);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get('/api/products/:id', async (req, res) => {
@@ -106,7 +106,7 @@ app.get('/api/products/:id', async (req, res) => {
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 // --- User Profile ---
@@ -119,7 +119,7 @@ app.get('/api/user', async (req, res) => {
     } else {
       res.status(404).json({ message: 'User not found' });
     }
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.put('/api/user', async (req, res) => {
@@ -136,7 +136,7 @@ app.put('/api/user', async (req, res) => {
       { new: true }
     );
     res.json(user);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 // --- Addresses ---
@@ -145,14 +145,14 @@ app.post('/api/user/addresses', async (req, res) => {
   try {
     await User.updateOne({ id: "1" }, { $push: { addresses: newAddress } });
     res.status(201).json(newAddress);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.delete('/api/user/addresses/:id', async (req, res) => {
   try {
     await User.updateOne({ id: "1" }, { $pull: { addresses: { id: req.params.id } } });
     res.json({ success: true });
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 // --- Orders ---
@@ -160,7 +160,7 @@ app.get('/api/orders', async (req, res) => {
   try {
     const orders = await Order.find({ userId: "1" });
     res.json(orders);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.post('/api/orders', async (req, res) => {
@@ -174,7 +174,7 @@ app.post('/api/orders', async (req, res) => {
     });
     await newOrder.save();
     res.status(201).json(newOrder);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.put('/api/orders/:id/cancel', async (req, res) => {
@@ -185,7 +185,7 @@ app.put('/api/orders/:id/cancel', async (req, res) => {
       { new: true }
     );
     res.json(order);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.put('/api/orders/:id/exchange', async (req, res) => {
@@ -196,9 +196,9 @@ app.put('/api/orders/:id/exchange', async (req, res) => {
       { new: true }
     );
     res.json(order);
-  } catch(e) { res.status(500).json({error: e.message}); }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
