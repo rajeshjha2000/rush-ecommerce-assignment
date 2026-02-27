@@ -6,9 +6,19 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.use(express.json());
 app.use('/images', express.static('public/images'));
+
+// Helper to fix image URLs from hardcoded localhost to current requester's host
+const fixImageUrl = (req, iconPath) => {
+  if (!iconPath) return iconPath;
+  if (iconPath.startsWith('http://localhost:5000')) {
+    const relativePart = iconPath.split('http://localhost:5000')[1];
+    return `${req.protocol}://${req.get('host')}${relativePart}`;
+  }
+  return iconPath;
+};
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -94,7 +104,12 @@ app.get('/api/products', async (req, res) => {
     // Exclude mongoose _id and __v for cleaner frontend response if needed, 
     // but the frontend is already built for JSON parsing so it will just ignore them
     const products = await Product.find(query);
-    res.json(products);
+    const fixedProducts = products.map(p => {
+      const obj = p.toObject();
+      obj.image = fixImageUrl(req, obj.image);
+      return obj;
+    });
+    res.json(fixedProducts);
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
@@ -102,7 +117,9 @@ app.get('/api/products/:id', async (req, res) => {
   try {
     const product = await Product.findOne({ id: parseInt(req.params.id) });
     if (product) {
-      res.json(product);
+      const obj = product.toObject();
+      obj.image = fixImageUrl(req, obj.image);
+      res.json(obj);
     } else {
       res.status(404).json({ message: 'Product not found' });
     }
