@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/cartSlice';
 import { toggleWishlist } from '../../store/wishlistSlice';
-import { Heart, ShoppingCart } from '@phosphor-icons/react';
+import { HeartIcon as Heart, ShoppingCartIcon as ShoppingCart } from '@phosphor-icons/react/dist/ssr';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProductCard({ product }) {
@@ -28,27 +28,27 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="card" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', position: 'relative' }}>
-      <button 
+      <button
         onClick={handleToggleWishlist}
         style={{ position: 'absolute', top: '16px', right: '16px', color: '#ef4444', background: 'none', border: 'none', cursor: 'pointer', zIndex: 10 }}
       >
         <Heart size={20} weight={isWishlisted ? "fill" : "regular"} />
       </button>
-      
+
       <div onClick={handleNavigate} style={{ padding: '16px', textAlign: 'center', height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
         <img src={product.image} alt={product.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
       </div>
-      
+
       <div style={{ flex: 1 }}>
         <div style={{ fontSize: '11px', color: 'var(--fg-muted)', marginBottom: '4px' }}>{product.category || 'Food'}</div>
         <h4 onClick={handleNavigate} className="h4" style={{ fontSize: '14px', fontWeight: 600, color: 'var(--fg-secondary)', marginBottom: '4px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', cursor: 'pointer' }}>
           {product.name}
         </h4>
-        
+
         {product.variants.length > 1 ? (
-          <select 
-            className="input" 
-            value={selectedVariantIdx} 
+          <select
+            className="input"
+            value={selectedVariantIdx}
             onChange={(e) => setSelectedVariantIdx(Number(e.target.value))}
             style={{ padding: '2px 4px', fontSize: '12px', width: 'fit-content', marginBottom: '12px', border: 'none', background: 'transparent', color: 'var(--fg-secondary)', paddingLeft: 0 }}
           >

@@ -1,4 +1,4 @@
-import { Phone, EnvelopeSimple, MapPin, FacebookLogo, XLogo, InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
+import { PhoneIcon as Phone, EnvelopeSimpleIcon as EnvelopeSimple, MapPinIcon as MapPin, FacebookLogoIcon as FacebookLogo, XLogoIcon as XLogo, InstagramLogoIcon as InstagramLogo, LinkedinLogoIcon as LinkedinLogo } from '@phosphor-icons/react/dist/ssr';
 
 export default function Footer() {
   return (

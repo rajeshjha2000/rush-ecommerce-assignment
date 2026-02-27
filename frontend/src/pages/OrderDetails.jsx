@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { ChatCircleDots, CaretRight, DownloadSimple } from '@phosphor-icons/react';
+import { ChatCircleDotsIcon as ChatCircleDots, CaretRightIcon as CaretRight, DownloadSimpleIcon as DownloadSimple } from '@phosphor-icons/react/dist/ssr';
 import { generateInvoice } from '../services/invoiceGenerator';
+import { getUser } from '../services/api';
 
 export default function OrderDetails() {
   const { id } = useParams();
@@ -12,6 +13,7 @@ export default function OrderDetails() {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelReason, setCancelReason] = useState('The Products are expired');
   const [cancelling, setCancelling] = useState(false);
+  const [user, setUser] = useState(null);
 
   const fetchOrder = () => {
     axios.get(`http://localhost:5000/api/orders`).then(res => {
@@ -31,6 +33,7 @@ export default function OrderDetails() {
     setOrder(null);
     setError('');
     fetchOrder();
+    getUser().then(setUser).catch(() => setUser(null));
   }, [id]);
 
   const handleCancelOrder = async () => {
@@ -231,7 +234,7 @@ export default function OrderDetails() {
         {/* Download Invoice */}
         <div style={{ marginBottom: '24px' }}>
           <button
-            onClick={() => generateInvoice(order)}
+            onClick={() => generateInvoice(order, user)}
             style={{
               display: 'flex', alignItems: 'center', gap: '10px',
               background: '#059669', color: 'white', border: 'none',

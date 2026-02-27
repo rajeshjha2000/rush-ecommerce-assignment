@@ -30,7 +30,7 @@ function numberToWords(num) {
     return words.trim() + ' Rupees only';
 }
 
-export function generateInvoice(order) {
+export function generateInvoice(order, user) {
     const doc = new jsPDF('p', 'mm', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 14;
@@ -130,6 +130,13 @@ export function generateInvoice(order) {
     y += 4;
 
     // Bill To (left)
+    const billName = user?.name || 'Customer';
+    const billAddress = (user?.addresses && user.addresses.length > 0)
+        ? `${user.addresses[0].flat || ''}, ${user.addresses[0].locality || ''}`
+        : (order.deliveryAddress || 'N/A');
+    const billPhone = user?.phone || '';
+    const billEmail = user?.email || '';
+
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(120, 120, 120);
@@ -137,14 +144,18 @@ export function generateInvoice(order) {
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...darkGray);
-    doc.text('Abhishek Sharma', headerLeft + 4, y + 8);
+    doc.text(billName, headerLeft + 4, y + 8);
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
-    doc.text('House no 12/12 Sector 13 faridabad old haryana 220012', headerLeft + 4, y + 13);
-    doc.text('Contact no : 9977885566', headerLeft + 4, y + 17);
-    doc.text('Email : shekAbhi@gmail.com', headerLeft + 4, y + 21);
+    doc.text(billAddress, headerLeft + 4, y + 13);
+    if (billPhone) doc.text('Contact no : ' + billPhone, headerLeft + 4, y + 17);
+    if (billEmail) doc.text('Email : ' + billEmail, headerLeft + 4, y + 21);
 
-    // Ship To (right)
+    // Ship To (right) - uses delivery address from order
+    const shipName = billName;
+    const shipAddress = order.deliveryAddress || billAddress;
+    const shipPhone = billPhone;
+
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(120, 120, 120);
@@ -152,11 +163,11 @@ export function generateInvoice(order) {
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...darkGray);
-    doc.text('Manan Verma', headerMid + 3, y + 8);
+    doc.text(shipName, headerMid + 3, y + 8);
     doc.setFontSize(8);
     doc.setFont('helvetica', 'normal');
-    doc.text('House no 12/12 Sector 13 faridabad old haryana 220012', headerMid + 3, y + 13);
-    doc.text('Contact no : 9977885566', headerMid + 3, y + 17);
+    doc.text(shipAddress, headerMid + 3, y + 13);
+    if (shipPhone) doc.text('Contact no : ' + shipPhone, headerMid + 3, y + 17);
 
     y += 28;
     doc.line(margin, y, margin + contentWidth, y);

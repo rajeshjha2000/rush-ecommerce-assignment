@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getOrders } from '../services/api';
 import { Link } from 'react-router-dom';
-import { MagnifyingGlass } from '@phosphor-icons/react';
+import { MagnifyingGlassIcon as MagnifyingGlass } from '@phosphor-icons/react/dist/ssr';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);

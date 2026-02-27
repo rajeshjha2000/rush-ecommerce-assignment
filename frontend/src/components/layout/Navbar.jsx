@@ -1,4 +1,4 @@
-import { ShoppingCart, MagnifyingGlass, MapPin, CaretDown, Heart } from '@phosphor-icons/react';
+import { ShoppingCartIcon as ShoppingCart, MagnifyingGlassIcon as MagnifyingGlass, MapPinIcon as MapPin, CaretDownIcon as CaretDown, HeartIcon as Heart } from '@phosphor-icons/react/dist/ssr';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 

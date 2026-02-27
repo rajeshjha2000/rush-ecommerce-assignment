@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUser, addAddress, deleteAddress } from '../services/api';
-import { PencilSimple, Trash, MapPin } from '@phosphor-icons/react';
+import { PencilSimpleIcon as PencilSimple, TrashIcon as Trash, MapPinIcon as MapPin } from '@phosphor-icons/react/dist/ssr';
 
 export default function Addresses() {
   const [activeTab, setActiveTab] = useState('Personal');
