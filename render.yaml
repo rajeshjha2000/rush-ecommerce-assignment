@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: rush-ecommerce-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://infojobfound_db_user:hGPxnFQIio4MbKvQ@cluster0.mb8b1cc.mongodb.net/rush_ecommerce?appName=Cluster0
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
