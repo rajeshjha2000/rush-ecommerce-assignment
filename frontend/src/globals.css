@@ -205,6 +205,7 @@ h4, .h4 { font-size: 16px; font-weight: 500; line-height: 1.5; }
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mb-24 { margin-bottom: 24px; }
+.mb-48 { margin-bottom: 48px; }
 
 /* Responsive Overrides */
 @media (max-width: 768px) {

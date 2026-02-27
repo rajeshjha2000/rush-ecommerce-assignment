@@ -9,11 +9,14 @@ export default function Profile() {
     getUser().then(data => {
       setUser(data);
       setFormData({ name: data.name, email: data.email, phone: data.phone });
+    }).catch(() => {
+      setUser({ name: '', email: '', phone: '', addresses: [] });
+      setFormData({ name: '', email: '', phone: '' });
     });
   }, []);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  
+
   const handleSave = async () => {
     const updated = await updateUser(formData);
     setUser(updated);
@@ -25,7 +28,7 @@ export default function Profile() {
   return (
     <div>
       <h2 className="h2 mb-24">Personal Details</h2>
-      
+
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
         <div className="form-group">
           <label className="form-label">Full Name</label>
